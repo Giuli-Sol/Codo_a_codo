@@ -1,9 +1,27 @@
+header{
+    display: flex;
+    min-height: 70px;  
+    background-color: #444; 
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
 
 .logoKmc{
     padding-left: 15%;
-   
+  display: flex; 
+  
   
 }
+.logoKmc img{
+    height: 90px;
+
+}
+
+
 
 
 body{
@@ -20,15 +38,24 @@ font-family: Arial, Helvetica, sans-serif;
 
 
 nav a {
-    color: #fff;
+    color:black;
     text-decoration: none;
     padding: 0 10px;
+    font-weight: 600;
+
 }
 
 nav a:hover{
- font-style: inherit;
- font: unset;
+color: white;
 }
+
+
+@media (max-width:700px){
+    header{
+        flex-direction: column;
+    }
+}
+
 
 .contedor{
     display: flex;
