@@ -40,7 +40,7 @@
    
     
     <main>
-		<form action="POST" class="formulario" id="formulario">
+		<form  enctype="multipart/form-data" class="formulario" id="formulario">
 		
 			<!-- Grupo: Nombre -->
 			<div class="formulario__grupo" id="grupo__nombre">
@@ -85,8 +85,8 @@
 			</div>
 			<div class="formulario__grupo" id="grupo__check">
 				<label for="contactoTelefono" class="formulario__label">Preferencia de Contacto:</label>
-				<input type="radio" id="contactoTelefono" name="contacto" value="Telefono" required> Teléfono
-  				<input type="radio" id="contactoEmail" name="contacto" value="Email" required> Email
+				<input type="radio" id="contactoTelefono" name="preferencia" value="Telefono" required> Teléfono
+  				<input type="radio" id="contactoEmail" name="preferencia" value="Email" required> Email
   
 				<!-- Crea un cuadrado para seleccionar la opcion elegida -->
 			</div>
@@ -94,14 +94,14 @@
 			<div class="formulario__grupo" id="grupo__texto">
                 <label for="comentarios" class="formulario__label">Deje sus comentarios:</label>
 				<div class="formulario__grupo-input">
-					<input type="text" class="formulario__input" name="comentarios" id="comentarios" placeholder="Deje sus consultas">
+					<input type="text" class="formulario__input" name="comentario" id="comentario" placeholder="Deje sus consultas">
 					<i class="formulario__validacion-estado fas fa-times-circle"></i>
 				</div>
             </div>
 
 			<div class="formulario__grupo" id="grupo__foto">
 				<label for="foto" class="formulario__label">Adjunte su imagen:</label>
-				<input type="file" id="foto">
+				<input type="file" id="foto" name="foto">
 				<!-- el tipo fyle se puede adjuntar el archivo -->
 			</div>
 
@@ -144,6 +144,12 @@
     </footer>
 	<script src="../js/contacto.js"></script>
 	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>	
+	
+	
+
+
+
+
 	
 </body>
 </html>
