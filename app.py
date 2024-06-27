@@ -75,20 +75,26 @@ class Contacto:
         return self.cursor.lastrowid
     
 
+     #----------------------------------------------------------------
+    def listar_consultas(self):
+        self.cursor.execute("SELECT * FROM consultas")
+        consultas = self.cursor.fetchall()
+        return consultas
+
 
 #--------------------------------------------------------------------
 # Cuerpo del programa
 #--------------------------------------------------------------------
 # Crear una instancia de la clase Catalogo
-contacto = Contacto(host='localhost', user='root', password='root', database='miapp')
-#contacto = contacto(host='USUARIO.mysql.pythonanywhere-services.com', user='USUARIO', password='CLAVE', database='USUARIO$miapp')
+#contacto = Contacto(host='localhost', user='root', password='root', database='miapp')
+contacto = Contacto(host='mcastro.mysql.pythonanywhere-services.com', user='mcastro', password='J5r2t7f8', database='mcastro$miapp')
 
 
 # Carpeta para guardar las imagenes.
-RUTA_DESTINO = './static/imagenes/'
+#RUTA_DESTINO = './static/imagenes/'
 
 #Al subir al servidor, deberá utilizarse la siguiente ruta. USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere
-#RUTA_DESTINO = '/home/USUARIO/mysite/static/imagenes'
+RUTA_DESTINO = '/home/mcastro/mysite/static/imagenes'
 
 
 #--------------------------------------------------------------------
@@ -96,10 +102,11 @@ RUTA_DESTINO = './static/imagenes/'
 #--------------------------------------------------------------------
 #La ruta Flask /consultas con el método HTTP GET está diseñada para proporcionar los detalles de todos los consultas almacenados en la base de datos.
 #El método devuelve una lista con todos los consultas en formato JSON.
-#@app.route("/contacto", methods=["GET"])
-#def listar_consultas():
-    #consultas = contacto.listar_consultas()
-   # return jsonify(consultas)
+
+@app.route("/contacto", methods=["GET"])
+def listar_consultas():
+    consultas = contacto.listar_consultas()
+    return jsonify(consultas)
 
 
     #--------------------------------------------------------------------
