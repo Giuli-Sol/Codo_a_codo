@@ -81,6 +81,29 @@ class Contacto:
         consultas = self.cursor.fetchall()
         return consultas
 
+    def consultar_consulta(self, id):
+        # Buscamos el producto en la tabla
+        self.cursor.execute(f"SELECT * FROM consultas WHERE id = {id}")
+        return self.cursor.fetchone() 
+    
+
+    def modificar_consulta(self, id, nombre, correo, telefono, imagen, motivo, preferencia, comentario):
+        sql = "UPDATE consultas SET nombre = %s, correo_electronico = %s, telefono = %s, imagen_url = %s, motivo = %s, preferencia = %s, comentario = %s WHERE id = %s"
+        valores = (nombre, correo, telefono, imagen, motivo, preferencia, comentario, id)
+        self.cursor.execute(sql, valores)
+        self.conn.commit()
+        return self.cursor.rowcount > 0
+
+    # Dentro de la clase Contacto
+
+    def eliminar_consulta(self, id):
+        self.cursor.execute("DELETE FROM consultas WHERE id = %s", (id,))
+        self.conn.commit()
+        return self.cursor.rowcount > 0
+
+        
+
+    
 
 #--------------------------------------------------------------------
 # Cuerpo del programa
@@ -142,7 +165,21 @@ def agregar_consulta():
         #Si el consulta no se puede agregar, se devuelve una respuesta JSON con un mensaje de error y un código de estado HTTP 500 (Internal Server Error).
         return jsonify({"mensaje": "Error al agregar el consulta."}), 500
     
-
+@app.route("/consultas/<int:id>", methods=["DELETE"])
+def eliminar_consulta(id):
+    consulta = contacto.consultar_consulta(id)
+    if consulta:  # Verifico q exista
+        # Verificar imagenes
+        imagen_vieja = consulta["imagen_url"]
+        ruta_imagen = os.path.join(RUTA_DESTINO, imagen_vieja)
+        if os.path.exists(ruta_imagen):
+            os.remove(ruta_imagen)
+        if contacto.eliminar_consulta(id):
+            return jsonify({"mensaje": f"Consulta {id} eliminada correctamente."}), 200
+        else:
+            return jsonify({"mensaje": f"Error al eliminar la consulta {id}."}), 500 #error de eliminacio
+    else:
+        return jsonify({"mensaje": f"Consulta {id} no encontrada."}), 404
 
     #--------------------------------------------------------------------
 if __name__ == "__main__":
