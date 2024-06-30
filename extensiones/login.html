@@ -40,39 +40,19 @@
     
     <main>
         <div>
-			<h1>Iniciar Sesion</h1>
-
-			
-			<form  enctype="multipart/form-data" class="formulario" id="formulario">
-				
-
-				<div class="formulario__grupo" id="grupo__correo">
-					<label for="correo" class="formulario__label">Correo Electrónico</label>
-					<div class="formulario__grupo-input">
-						<input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
-					</div>
-				</div>
-				
-
-				
-
-				<div class="formulario__grupo col-md-6" id="grupo__contrasenia">
-					<label for="contrasenia" class="formulario__label">Contraseña</label>
-					<div class="formulario__grupo-input">
-						<input type="text" class="formulario__input" name="contrasenia" id="contrasenia" placeholder="Escriba su contraseña">
-					</div>
-				</div>
-				
-		
-			</form>
-
-					
+            <h1>Iniciar Sesión</h1>
+            <form role="form" action="/login" method="post">
+                <div>
+                    <label for="l_usuario">Usuario:</label>
+                    <input type="text" id="l_usuario" name="l_usuario" placeholder="Ingrese su usuario" required>
+                </div>
+                <div>
+                    <label for="l_contrasenia">Contraseña:</label>
+                    <input type="password" id="l_contrasenia" name="l_contrasenia" placeholder="Ingrese su contraseña" required>
+                </div>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
         </div>
-		
-        
-        
-        
-			
 
 			
 

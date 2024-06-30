@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Consultas</title>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/e55b798d0a.js" crossorigin="anonymous"></script>
+
+  <!-- CSS Externo -->
+  <link rel="stylesheet" href="../css/estilo.css">
+  <!-- FAVICON -->
+  <link rel="icon" href="../img/favicon.ico">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="../index.html">
+        <img src="../img/logo-kimica.png" alt="logo-kmc" width="150" height="150">
+      </a>
+      <h1>Hola Maker👋</h1>
+    </div>
+  </header>
+
+  <nav>
+    <a href="./index.html">Inicio</a>
+    <a href="./extensiones/impresora-fdm.html">Impresoras de Filamento</a>
+    <a href="./extensiones/impresora-resina.html">Impresoras de Resina</a>
+    <a href="./extensiones/insumos.html">Insumos</a>
+    <a href="./extensiones/trabajos.html">Trabajos</a>
+    <a href="./extensiones/contacto.html">Contacto</a>
+  </nav>
+
+  <main>
+    <h2>Listado de Consultas</h2>
+    <table class="tabla" id="tabla">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Preferencia</th>
+          <th>Motivo de Contacto</th>
+          <th>Foto</th>
+          <th>Comentario</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaconsulta">
+        <!-- Aquí se cargarán dinámicamente las consultas desde JavaScript -->
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <a href="./extensiones/TyC.html">Términos y Condiciones</a>
+    <a href="./extensiones/pregFrec.html">Preguntas Frecuentes</a>
+
+    <div class="redes">
+      <a href="https://web.facebook.com/kimica.3d" target="_blank">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/kimica_3d/" target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.tiktok.com/@kimica_3d" target="_blank">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://walink.co/6101ef" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const URL = "http://127.0.0.1:5000/";
+
+    // Función para cargar las consultas desde el servidor
+    function cargarConsultas() {
+      fetch(URL + 'consultas')
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } 
+        })
+        .then(data => {
+            const tablaConsulta = document.getElementById('tablaconsulta')
+            tablaConsulta.innerHTML = ''; 
+            data.forEach(consulta => {
+                const row = tablaConsulta.insertRow();
+            row.innerHTML = `
+                <td>${consulta.id}</td>
+                <td>${consulta.nombre}</td>
+                <td>${consulta.correo_electronico}</td>
+                <td>${consulta.telefono}</td>
+                <td>${consulta.preferencia}</td>
+                <td>${consulta.motivo}</td>
+                <td><img src="../static/imagenes/${consulta.imagen_url}" alt="Imagen del consulta" style="width: 100px;"></td>
+                <td>${consulta.comentario}</td>
+                <td><button onclick="eliminarConsulta(${consulta.id})">Eliminar</button></td>
+            `;
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error al cargar las consultas.');
+        });
+    }
+
+    // Función para eliminar una consulta
+    function eliminarConsulta(id) {
+      if (confirm(`¿Estás seguro de eliminar la consulta ${id}?`)) {
+        fetch(URL + `consultas/${id}`, { method: 'DELETE' })
+          .then(response => {
+            if (response.ok) {
+              
+              cargarConsultas();
+              alert('Eliminado correctamente.'); 
+            } else {
+              throw new Error('Error al eliminar la consulta.');
+            }
+          })
+          .catch(error => {
+            alert(error.message);
+          });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarConsultas);
+  </script>
+</body>
+
+</html>

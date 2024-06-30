@@ -21,7 +21,7 @@ import time
 
 app = Flask(__name__)
 CORS(app)  # Esto habilitará CORS para todas las rutas
-
+   
 #--------------------------------------------------------------------
 class Contacto:
     #----------------------------------------------------------------
@@ -101,15 +101,13 @@ class Contacto:
         self.conn.commit()
         return self.cursor.rowcount > 0
 
-        
-
-    
-
 #--------------------------------------------------------------------
 # Cuerpo del programa
 #--------------------------------------------------------------------
 # Crear una instancia de la clase Catalogo
-contacto = Contacto(host='localhost', user='root', password='root', database='miapp')
+contacto = Contacto(host='localhost', user='root', password='', database='miapp')
+
+#contacto = Contacto(host='localhost', user='root', password='root', database='miapp')
 #contacto = Contacto(host='mcastro.mysql.pythonanywhere-services.com', user='mcastro', password='J5r2t7f8', database='mcastro$miapp')
 
 
@@ -180,7 +178,50 @@ def eliminar_consulta(id):
             return jsonify({"mensaje": f"Error al eliminar la consulta {id}."}), 500 #error de eliminacio
     else:
         return jsonify({"mensaje": f"Consulta {id} no encontrada."}), 404
+    
+@app.route("/consultas/<int:id>", methods=["PUT"])
+def modificar_consulta(id):
+
+    # Recuperar los nuevos datos del formulario
+    nombre = request.form.get("nombre")
+    correo = request.form.get("correo")
+    telefono = request.form.get("telefono")
+    motivo = request.form.get("motivo")
+    preferencia = request.form.get("preferencia")
+    comentario = request.form.get("comentario")
+
+    # Verificar si se proporciona una nueva imagen
+    if 'imagen' in request.files:
+        imagen = request.files['imagen']
+        # Procesar la imagen
+        nombre_imagen = secure_filename(imagen.filename)
+        nombre_base, extension = os.path.splitext(nombre_imagen)
+        nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
+        imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
+    else:
+        # Si no se proporciona una nueva imagen, mantener la imagen existente
+        consulta = contacto.consultar_consulta(id)
+        if consulta:
+            nombre_imagen = consulta["imagen_url"]
+
+    # Llamar al método modificar_consulta pasando el id y los nuevos datos
+    if contacto.modificar_consulta(id, nombre, correo, telefono, nombre_imagen, motivo, preferencia, comentario):
+        return jsonify({"mensaje": "Consulta modificada correctamente."}), 200
+    else:
+        return jsonify({"mensaje": "Error al modificar la consulta."}), 500
+
+@app.route("/consultas/<int:id>", methods=["GET"])
+def mostrar_consulta(id):
+    consulta = contacto.consultar_consulta(id)
+    if consulta:
+        return jsonify(consulta), 201
+    else:
+        return "Consulta no encontrada.", 404
 
     #--------------------------------------------------------------------
+    # Login
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
