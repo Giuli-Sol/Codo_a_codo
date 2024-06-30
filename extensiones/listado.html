@@ -83,7 +83,7 @@
 	
 	<script>
         const URL = "http://127.0.0.1:5000/comentarios";
-       
+       //const URL = "https://mcastro.pythonanywhere.com/"
         fetch(URL)
         //verifico
             .then(function (response) {
@@ -102,10 +102,11 @@
                         `<td>${comentario.nombre}</td>` +
                         `<td>${comentario.correo_electronico}</td>` +
                         `<td>${comentario.telefono}</td>` +
-                        `<td><img src=../static/imagenes/${comentario.imagen_url} alt="Imagen del comentario" style="width: 100px;"></td>` +
                         `<td>${comentario.motivo}</td>` +
                         `<td>${comentario.preferencia}</td>` +
-                        `<td>${comentario.comentario}</td>`;
+                        `<td>${comentario.comentario}</td>`+
+                        '<td><img src=https://www.pythonanywhere.com/user/mcastro/files/home/mcastro/mysite/static/imagenes/' + consulta.imagen_url +' alt="Imagen del producto" style="width: 100px;"></td>' + '<td align="right">' +consulta.comentario + '</td>';
+                       
                     
                     tablaComentarios.appendChild(fila);
                 }

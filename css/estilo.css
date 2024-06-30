@@ -414,6 +414,48 @@ table th, table td {
     padding: 8px;
     box-sizing: border-box;
 }
+/* Tabla */
+/* Estilo general para la tabla */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+/* Estilo para las celdas del encabezado */
+.tabla thead th {
+    background-color: #009879;
+    color: white;
+    padding: 12px 15px;
+}
+
+/* Estilo para las celdas del cuerpo */
+.tabla tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dddddd;
+}
+
+/* Estilo para las filas */
+.tabla tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+/* Estilo para las filas impares */
+.tabla tbody tr:nth-of-type(odd) {
+    background-color: #f3f3f3;
+}
+
+/* Estilo para las filas al pasar el ratón por encima */
+.tabla tbody tr:hover {
+    background-color: #d8bbbb;
+}
+
+/* Alineación del contenido en las celdas */
+.tabla tbody td {
+    text-align: left;
+}
 
 /* Media Queries para dispositivos */
 /*Tablets*/
