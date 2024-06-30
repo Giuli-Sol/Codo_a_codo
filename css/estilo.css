@@ -45,6 +45,23 @@ body{
     margin: 0; /* Elimina el margen en el cuerpo */
 }
 
+
+.button-link {
+    display: inline-block; /* Mostrar como bloque en línea */
+    padding: 10px 20px; /* Relleno interno */
+    text-decoration: none; /* Quitar subrayado del enlace */
+    color: #333; /* Color del texto */
+    background-color: #759be0; /* Color de fondo */
+    border: 1px solid #ccc; /* Borde delgado */
+    border-radius: 5px; /* Borde redondeado */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transiciones */
+}
+
+.button-link:hover {
+    background-color: #e0e0e0; /* Color de fondo al pasar el mouse */
+    color: #000; /* Color del texto al pasar el mouse */
+}
+
 /* BARRA NAVEGACION */
 nav {
     background-color: var(--color-quinto);
